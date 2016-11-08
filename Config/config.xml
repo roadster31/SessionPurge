@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config xmlns="http://thelia.net/schema/dic/config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://thelia.net/schema/dic/config http://thelia.net/schema/dic/config/thelia-1.0.xsd">
+
+    <commands>
+        <command class="SessionPurge\Command\SessionPurge"/>
+    </commands>
+
+    <services>
+        <service id="sessionpurge.purge" class="SessionPurge\EventListener\EventManager">
+            <argument type="service" id="event_dispatcher" />
+            <tag name="kernel.event_subscriber"/>
+        </service>
+    </services>
+</config>
