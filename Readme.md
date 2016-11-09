@@ -28,7 +28,7 @@ To specify a  session lifetime, use the `older_than` URL parameter, for example 
 
 `http://yourhost.tld/session-purge/53cr37_k3y?older_than=86400`
 
-Your can also use the `verbose` URL parameter to get the list of deleted files.
+Your can also use the `verbose=1` URL parameter to get the list of deleted files.
 
 ----
 
@@ -39,7 +39,7 @@ risque de saturer le disque, ou d'épuiser les réserves d'inodes.
 
 La commande utilise la valeur de `session_config.lifetime`, qui est la durée de vie d'une session en secondes, et supprime
 tous les fichiers qui sont plus anciens que `session_config.lifetime` secondes.
-Si `session_config.lifetime` valeur 0 (zéro), la commande ne supprimera aucun fichier. Vous pouvez alors utliser l'option
+Si `session_config.lifetime` valeur 0 (zéro), la commande ne supprimera aucun fichier. Vous pouvez alors utiliser l'option
 `--older-than _seconds_` pour définir l'age maximum des fichiers de session. Quand `--older-than` est utilisé, la valeur
 de `session_config.lifetime` est ignorée.
 
@@ -52,16 +52,16 @@ Si vous ne pouvez pas lancer de cron ou de commandes sur votre serveur, vous pou
  
 `http://yourhost.tld/session-purge/<i>clef_secrete</i>`
 
-La clef secrète est stockée dans le fichier `Config/secret-key.txt`. Entrez la chaîne de caractère vous voulez sur la 
+La clef secrète est stockée dans le fichier `Config/secret-key.txt`. Entrez la chaîne de caractère que vous voulez sur la 
 première ligne de ce fichier, et utilisez la dans l'URL. Par exemple, si vous avez indiqué `53cr37_k3y` dans ce fichier,
-vous devrez utilise l'URL suivante :
+vous devrez utiliser l'URL suivante :
 
 `http://yourhost.tld/session-purge/53cr37_k3y`
 
 La clef par défaut est `Thelia2` (surprise !).
 
-Pour indiquer une durée de vie de session, vous pouvez utiliser le paramètre `older_than``:
+Pour indiquer une durée de vie de session, vous pouvez utiliser le paramètre `older_than`:
 
 `http://yourhost.tld/session-purge/53cr37_k3y?older_than=86400`
 
-Vous pouvez aussi utiliser le paramètre `verbose=1` pour obtenir la liste des fichier supprimés.
+Vous pouvez aussi utiliser le paramètre `verbose=1` pour obtenir la liste des fichiers supprimés.
