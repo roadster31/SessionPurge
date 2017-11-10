@@ -7,11 +7,17 @@ Run it periodically, in a cron for example, to prevent the local/session directo
 The command uses the value of the `session_config.lifetime` configuration variable, which is the session lifetime 
 in seconds, and delete all files which are older than `session_config.lifetime` seconds.
 If `session_config.lifetime` is 0 (zero), the command will not delete anything. Use the `--older-than _seconds_` option 
-to define the maximum age of a session file. When `--older-than` is used, the value of `session_config.lifetime` configuration variable is ignored.
+to define the maximum age of a session file. When `--older-than` is used, the value of `session_config.lifetime`
+configuration variable is ignored.
+You may also use `-d _days_` to delete session files older than the specified number of days.
 
-For example, to delete sessions older than one day, use the following command :
+For example, to delete sessions older than ten day, use the following command :
 
-`Thelia sessions:purge --older-than 86400`
+`Thelia sessions:purge --older-than 864000`
+
+or
+
+`Thelia sessions:purge -d 10`
 
 If you can't run a cron on your host, you can use the following URL to trigger the purge process :
 

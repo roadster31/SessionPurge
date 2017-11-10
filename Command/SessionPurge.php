@@ -30,32 +30,51 @@ class SessionPurge extends ContainerAwareCommand
             ->setDescription("Purge all outdated session in local/sessions directory")
             ->addOption(
                 "older-than",
-                null,
+                's',
                 InputOption::VALUE_OPTIONAL,
-                "Delete session older than N seconds. The session_config.lifetime value is ignored."
+                "Delete sessions older than N seconds. The session_config.lifetime value is ignored."
+            )->addOption(
+                'day',
+                'd',
+                InputOption::VALUE_OPTIONAL,
+                'Delete sessions older than N days. The session_config.lifetime value is ignored.',
+                null
             )
         ;
     }
-    
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $lifetime = intval($input->getOption('older-than'));
-        
+        $days = $seconds = 0;
+
+        $seconds = $lifetime = intval($input->getOption('older-than'));
+
         if ($lifetime <= 0) {
-            $lifetime = ConfigQuery::read('session_config.lifetime', 0);
+            $days = intval($input->getOption('day'));
+            $lifetime = 86400 * $days;
         }
-        
+
+        if ($lifetime <= 0) {
+            $lifetime = $seconds = ConfigQuery::read('session_config.lifetime', 0);
+        }
+
         if ($lifetime > 0) {
-            $output->writeln(sprintf("<info>Deleting session files older than %d seconds</info>", $lifetime));
-    
+            $output->writeln(
+                sprintf(
+                    "<info>Deleting session files older than %d %s</info>",
+                    $days > 0 ? $days : $seconds,
+                    $days > 0 ? 'days' : 'seconds'
+                )
+            );
+
             $event = new SessionPurgeEvent($lifetime, $input->getOption('verbose'));
-            
+
             $this->getDispatcher()->dispatch(SessionPurgeEvent::PURGE, $event);
-    
+
             foreach ($event->getStatus() as $status => $level) {
                 $output->writeln("<$level>$status</$level>");
             }
-    
+
             $output->writeln(sprintf("<info>%d session files deleted</info>", $event->getDeletedCount()));
         } else {
             $output->writeln(sprintf("<info>Session lifetime is undefined, please check session_config.lifetime variable.</info>"));
