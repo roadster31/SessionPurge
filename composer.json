@@ -1,5 +1,5 @@
 {
-  "name": "your-vendor/session-purge-module",
+  "name": "roadster31/session-purge-module",
   "license": "LGPL-3.0+",
   "type": "thelia-module",
   "require": {
